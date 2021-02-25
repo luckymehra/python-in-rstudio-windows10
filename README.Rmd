@@ -1,0 +1,66 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# python-in-rstudio-windows10
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+I used Kristopher Overholt's [awesome guide](https://support.rstudio.com/hc/en-us/articles/360023654474-Installing-and-Configuring-Python-with-RStudio) to configure Python in RStudio. However, there were some steps that I had to tweak slightly to make it work on Windows 10 operating system.
+
+I will only list the steps that I had to do differently. I used Anaconda Prompt
+for installing `virtualenv` (step 1 and step 2).
+
+### Step 3
+
+Instead of `source python/bin/activate` use `source python/Scripts/activate`. Also,
+enter `source python/Scripts/activate` in the Terminal tab (next to the Console)
+tab. I am using *Git Bash* as my RStudio Terminal.
+
+### Step 5
+
+Inside .Rprofile file, the content should be
+
+```
+Sys.setenv(RETICULATE_PYTHON = "python/Scripts/python.exe")
+```
+
+Everything else should be same as described the guide from [RStudio Support](https://support.rstudio.com/hc/en-us/articles/360023654474-Installing-and-Configuring-Python-with-RStudio)
+
+### Test python run
+
+```{python}
+import pandas as pd
+
+d = {'col1': [1, 2], 'col2': [3, 4]}
+df = pd.DataFrame(data=d)
+df
+type(df)
+```
+
+Access python dataframe in an R chunk
+
+```{r}
+library(reticulate)
+df_in_r <- py$df
+
+df_in_r
+
+class(df_in_r)
+```
+
+
+
+```{r}
+sessionInfo()
+```
